@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../blocs/provider.dart';
 import '../blocs/bloc.dart';
+import 'result_screen.dart';
 
 class FillUpScreen extends StatelessWidget {
   DateTime nowDate = DateTime.now();
@@ -192,7 +193,22 @@ class FillUpScreen extends StatelessWidget {
         return RaisedButton(
           child: Text('Submit'),
           color: Colors.blue,
-          onPressed: snapshot.hasData ? bloc.submit : null,
+          // onPressed: snapshot.hasData ? bloc.submit(context) : null,
+          onPressed: () {
+            if (snapshot.hasData) {
+              bloc.submit();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => ResultScreen(
+                      // amount: bloc.amount.toString(),
+                      ),
+                ),
+              );
+            } else {
+              return null;
+            }
+          },
         );
       },
     );
